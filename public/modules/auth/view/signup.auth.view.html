@@ -1,0 +1,72 @@
+<section class="row">
+	<div class="col-xs-offset-1 col-xs-10 col-md-offset-4 col-md-4">
+		<h3 class="text-center" style="color:#D9D9D9;">Sign Up</h3>
+		<form name="userForm" class="form-horizontal" novalidate autocomplete="off">
+			<fieldset>
+				<div class="form-group">
+					<div data-ng-show="error" class="text-center text-danger">
+						<div class="alert alert-danger">
+							<strong data-ng-bind="error"></strong>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon">
+							<i class="text-muted glyphicon glyphicon-user"></i>
+						</span>
+						<input type="text" class="form-control" name="firstName" data-ng-model="credentials.firstName" placeholder="First Name" required>
+					</div>
+					<h5 class="alert alert-danger" ng-show="userForm.firstName.$error.required && userForm.firstName.$dirty">
+						The first name field is required
+					</h5>
+				</div>
+				<div class="form-group">
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon">
+							<i class="text-muted glyphicon glyphicon-user"></i>
+						</span>
+						<input type="text" class="form-control" name="lastName" data-ng-model="credentials.lastName" placeholder="Last Name" required>
+					</div>
+					<h5 class="alert alert-danger" ng-show="userForm.lastName.$error.required && userForm.lastName.$dirty">
+						The last name field is required
+					</h5>
+				</div>
+				<div class="form-group">
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon">
+							<i class="text-muted glyphicon glyphicon-envelope"></i>
+						</span>
+						<input type="email" class="form-control" name="email" data-ng-model="credentials.email" placeholder="Email" required>
+					</div>
+					<h5 class="alert alert-danger" ng-show="userForm.email.$error.required && userForm.email.$dirty">
+						The email field is required
+					</h5>
+					<h5 class="alert alert-danger" ng-show="userForm.email.$invalid && userForm.email.$dirty">
+						Please enter a valid email address
+					</h5>
+				</div>
+				<div class="form-group">
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon">
+							<i class="text-muted glyphicon glyphicon-asterisk"></i>
+						</span>
+						<input type="password" class="form-control" name="password" ng-maxlength="40" ng-minlength="8" data-ng-model="credentials.password" placeholder="Password" required>
+					</div>
+					<h5 class="alert alert-danger" ng-show="userForm.password.$error.required && userForm.password.$dirty">
+						The password field is required
+					</h5>
+					<h5 class="alert alert-danger" ng-show="userForm.password.$error.maxlength && userForm.password.$dirty">
+						The maximum length is 40 charecters
+					</h5>
+					<h5 class="alert alert-danger" ng-show="userForm.password.$error.minlength && userForm.password.$dirty">
+						The minimum length is 8 charecters
+					</h5>
+				</div>
+				<div class="text-center form-group">
+					<button ng-click="signUp()" ng-disabled="userForm.$invalid" class="btn btn-lg btn-default btn-block">Sign up</button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</section>

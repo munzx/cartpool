@@ -1,0 +1,34 @@
+<div class="row">
+	<div class="col-md-12">
+		<a target="_blank" ng-href="{{link()}}" class="btn btn-default btn-md">
+			<i class="glyphicon glyphicon-download"></i>
+			Download CSV
+		</a>
+	</div>
+	<div class="col-md-12" style="margin-top: 1.5em;">
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
+					<tr>
+						<th class="text-center">Product</th>
+						<th class="text-center">Price</th>
+						<th class="text-center">Customer</th>
+						<th class="text-center">Email</th>
+						<th class="text-center">Mobile Phone</th>
+						<th class="text-center">Date</th>
+					</tr>
+				</thead>
+				<tbody ng-repeat="order in orders" class="no-animate">
+					<tr>
+						<td class="text-center">{{order.name}}</td>
+						<td class="text-center">{{order.currentPrice}}</td>
+						<td class="text-center">{{order.customer}}</td>
+						<td class="text-center">{{order.email}}</td>
+						<td class="text-center">{{order.mobilePhone || "------------"}}</td>
+						<td class="text-center">{{order.created}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

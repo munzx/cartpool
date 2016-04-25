@@ -1,0 +1,139 @@
+* {
+    text-shadow:none !important;
+    box-shadow: none !important;
+    border-radius:0 !important;
+    -webkit-box-shadow:none !important;
+}
+
+body {
+	font-weight: 300;
+	line-height: 1.42857143;
+	padding-top: 6em;
+	padding-bottom: 7%;
+}
+
+.navbar-collapse {
+	max-height: 400px !important;
+}
+
+.form-bg {
+	background-color: #fff;
+	border: 15px solid;
+	border-radius: 0;
+	border-color: #fff;
+	margin-top: 50px;
+}
+
+input.pristine {
+	border-color: #fff;
+}
+
+input.ng-invalid.ng-dirty {
+	border-color: #C9302C;
+}
+
+input.ng-valid {
+	border-color: #31B0D5;
+}
+
+textarea {
+	resize: none;
+}
+
+.add-space {
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.btn:focus {
+  outline: none;
+}
+
+#nav {
+	opacity: 0.85;
+}
+
+#footer {
+	opacity: 0.85;
+    margin-top: 12em;
+}
+
+canvas {
+  width: 100%;
+  height: auto;
+}
+
+hr {
+  -moz-border-bottom-colors: none;
+  -moz-border-image: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  border-color: #EEEEEE -moz-use-text-color #FFFFFF;
+  border-style: solid none;
+  border-width: 1px 0;
+  margin: 18px 0;
+}
+
+.icon-right {
+    float: right;
+    display: inline;
+    clear: both;
+    margin: 2px;
+    margin-right: 0px;
+}
+
+@-moz-document url-prefix() {
+  fieldset { display: table-cell; }
+}
+
+.no-animate {
+ -webkit-transition: none !important;
+ transition: none !important;
+}
+
+.image-center .img-responsive {
+    margin: 0 auto;
+}
+
+.full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+}
+.partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+}
+
+.profile-center {
+    margin: 0 auto;
+}
+
+.box-center {
+    margin: 0 auto;
+}
+
+.image-center {
+    margin: 0 auto;
+    width: 100%;
+}
+
+.cursor {
+    cursor: pointer;
+}
+
+.jumbotron {
+    padding: 20px !important;
+}
+
+.navbar {
+    position: relative;
+}
+.brand {
+    position: absolute;
+    left: 50%;
+    margin-left: -50px !important;  /* 50% of your logo width */
+    display: block;
+}

@@ -1,0 +1,34 @@
+<div class="col-md-6" style="background-color: #fff78e;border: solid #fff 1em;padding: 5px;">
+	<p ng-if="product.availiable == 0" class="text-center">Product not availiable</p>
+	<timer ng-if="openLessThan5() || openMoreThan5()" end-time="product.openUntil">
+		<p>Time left to place your order is <b>{{days}} days, {{hours}}:{{minutes}}:{{seconds}}</b></p>
+	</timer>
+	<timer ng-if="openRechedLowesePrice()" end-time="closeOrder">
+		<p>Orders will close in  <b>{{minutes}}:{{seconds}}</b></p>
+	</timer>
+	<p ng-if="closeReachedLowesPrice() || closedNotReachedLowestPrice() || closedLessThan5()" class="text-center">Orders closed</p>
+	<img class="img-responsive" ng-src="{{product.image}}">
+	<p style="margin-top: 10px;">
+		<i class="glyphicon glyphicon-tags"></i>
+		Current Pirce is AED {{product.currentPrice}}
+	</p>
+	<h5 ng-if="openLessThan5()" style="padding: 1em;">
+		{{5 -(product.totalOrdersQty)}} orders required to unlock AED {{product.initialPrice - (product.initialPrice / 5)}}
+	</h5>
+	<h5 ng-if="closedLessThan5()" style="padding: 1em;">
+		Did't get the minimum required orders!
+	</h5>
+	<h5 ng-if="openRechedLowesePrice()" style="padding: 1em;">
+		Best price is unlocked, order now and save AED {{product.initialPrice - product.currentPrice}}!
+	</h5>
+	<h5 ng-if="closedNotReachedLowestPrice()" style="padding: 1em;">
+		Buyers saved AED {{product.initialPrice - product.currentPrice}}
+	</h5>
+	<h5 ng-if="closeReachedLowesPrice()" style="padding: 1em;">
+		Best price is unlocked, buyers saved AED {{product.initialPrice - product.currentPrice}}
+	</h5>
+	<progressbar ng-if="openMoreThan5()" class="progress-striped active" value="product.percentageToLowestPrice" max="100" type="success">
+		<i>{{ 100 - product.percentageToLowestPrice }}% to unlock AED {{product.lowestPrice}}</i>
+	</progressbar>
+	<button class="btn btn-default btn-md btn-block" ng-disabled="disableOrders" ng-click="order()">Order Now!</button>
+</div>

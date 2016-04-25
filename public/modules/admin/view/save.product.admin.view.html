@@ -1,0 +1,81 @@
+<section>
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" ng-click="closeModal()" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<h4 class="modal-title text-center">New Product</h4>
+		</div>
+		<div class="modal-body">
+			<h4 ng-if="error" class="alert alert-danger">{{error}}</h4>
+			<form class="form" name="product">
+				<div class="form-group">
+					<div class="input-group input-group-md">
+						<span class="input-group-addon">
+							<i class="text-muted glyphicon glyphicon-asterisk"></i>
+						</span>
+						<input type="text" class="form-control" name="name" data-ng-model="productInfo.name" placeholder="Name" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group input-group-md">
+						<span class="input-group-addon">
+							<i class="text-muted glyphicon glyphicon-list"></i>
+						</span>
+						<textarea class="form-control" name="desc" data-ng-model="productInfo.desc" placeholder="Description" required></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group input-group-md">
+						<span class="input-group-addon">
+							<i class="text-muted glyphicon glyphicon-flag"></i>
+						</span>
+						<input type="number" class="form-control" name="initialPrice" data-ng-model="productInfo.initialPrice" placeholder="Initial Price" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group input-group-md">
+						<span class="input-group-addon">
+							<i class="text-muted glyphicon glyphicon-arrow-down"></i>
+						</span>
+						<input type="number" class="form-control" name="lowestPrice" data-ng-model="productInfo.lowestPrice" placeholder="lowest Price" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group input-group-md">
+						<span class="input-group-addon">
+							<i class="text-muted glyphicon glyphicon-time"></i>
+						</span>
+						<input type="number" class="form-control" name="minutesToClose" data-ng-model="productInfo.minutesToClose" placeholder="Minutes To Close" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group input-group-md">
+						<span class="input-group-addon">
+							<i class="text-muted glyphicon glyphicon-briefcase"></i>
+						</span>
+						<input type="number" class="form-control" name="availiable" data-ng-model="productInfo.availiable" placeholder="Availiable" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group input-group-md">
+						<span class="input-group-addon">
+							<i class="text-muted glyphicon glyphicon-calendar"></i>
+						</span>
+						<input type="datetime-local" class="form-control" name="openUntil" data-ng-model="productInfo.openUntil" placeholder="Open Until" required>
+					</div>
+				</div>
+                <div class="form-group">
+                    <div class="row">
+                        <canvas style="display:none;"><h4 class="alert alert-danger">Please upgrade your browser or use a modern browser</h4></canvas>
+                        <div class="col-md-12">
+                            <canvas class="cursor" id="imagePreview" width="1000" height="400"></canvas>
+                            <input style="display: none;" type="file" data-ng-model="productInfo.image" watch-image-config-directive accept="image/*" id="image" name="image" class="form-control" image-place-holder='{{ img || "public/modules/config/img/placeholder.jpg" }}' required>
+                        </div>
+                    </div>
+                </div>
+				<button class="btn btn-default btn-lg btn-block" ng-disabled="product.$invalid" ng-click="save()">Save</button>
+			</form>
+		</div>
+	</div>
+</section>

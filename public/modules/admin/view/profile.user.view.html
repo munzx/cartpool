@@ -1,0 +1,70 @@
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<h4 class="text-center" style="color: #D9D9D9;">{{pageTitle.toUpperCase()}}</h4>
+		<h4 class="alert alert-danger" ng-show="error">{{error}}</h4>
+		<h4 class="alert alert-success" ng-show="success">Successfully updated information</h4>
+		<div class="row">
+			<div class="col-md-12">
+				<form class="form" name="info">
+					<div class="form-group">
+						<div class="form-input">
+							<div class="input-group input-group-lg">
+								<span class="input-group-addon">
+									<i class="text-muted glyphicon glyphicon-phone"></i>
+								</span>
+								<input type="text" class="form-control" name="mobilePhone" placeholder="Mobile phone" ng-model="profile.mobilePhone" required>
+							</div>
+							<h5 class="alert alert-danger" ng-show="info.mobilePhone.$error.required && info.mobilePhone.$dirty">
+								Mobile phone field is required
+							</h5>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="form-input">
+							<div class="input-group input-group-lg">
+								<span class="input-group-addon">
+									<i class="text-muted glyphicon glyphicon-envelope"></i>
+								</span>
+								<input type="email" class="form-control" name="email" placeholder="Email" ng-model="profile.email" required>
+							</div>
+							<h5 class="alert alert-danger" ng-show="info.email.$error.required && info.email.$dirty">
+								Email field is required
+							</h5>
+							<h5 class="alert alert-danger" ng-show="info.email.$invalid && info.email.$dirty">
+								Email address is not valid
+							</h5>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="form-input">
+							<div class="input-group input-group-lg">
+								<span class="input-group-addon">
+									<i class="text-muted glyphicon glyphicon-asterisk"></i>
+								</span>
+								<input type="password" class="form-control" placeholder="Current password"
+										ng-model="profile.currentPassowrd">
+							</div>
+							<div class="input-group input-group-lg">
+								<span class="input-group-addon">
+									<i class="text-muted glyphicon glyphicon-asterisk"></i>
+								</span>
+								<input type="password" class="form-control" placeholder="New password"
+										ng-model="profile.newPassowrd">
+							</div>
+							<div class="input-group input-group-lg">
+								<span class="input-group-addon">
+									<i class="text-muted glyphicon glyphicon-asterisk"></i>
+								</span>
+								<input type="password" class="form-control" placeholder="Re-write the new password"
+										ng-model="profile.repeatedNewPassowrd">
+							</div>
+						</div>
+					</div>
+				</form>
+				<button class="btn btn-block btn-lg btn-defualt"
+						ng-disabled="isPasswordValid() || info.email.$invalid || info.mobilePhone.$invalid"
+						ng-click="updateProfile()">Update</button>
+			</div>
+		</div>
+	</div>
+</div>

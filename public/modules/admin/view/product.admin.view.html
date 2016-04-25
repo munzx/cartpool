@@ -1,0 +1,42 @@
+<div class="row">
+	<div class="col-md-12">
+		<button class="btn btn-default btn-md" ng-click="addProduct()">
+			<i class="glyphicon glyphicon-plus"></i>
+			Add
+		</button>
+	</div>
+	<div class="col-md-12" style="margin-top: 1.5em;">
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
+					<tr>
+						<th class="text-center">Name</th>
+						<th class="text-center">Current Price</th>
+						<th class="text-center">Initial Price</th>
+						<th class="text-center">Lowest Price</th>
+						<th class="text-center">Orders</th>
+						<th class="text-center">Date</th>
+						<th class="text-center">Closed</th>
+						<th class="text-center">Reset</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="product in products" class="no-animate">
+						<td class="text-center">{{product.name}}</td>
+						<td class="text-center">{{product.currentPrice}}</td>
+						<td class="text-center">{{product.initialPrice}}</td>
+						<td class="text-center">{{product.lowestPrice}}</td>
+						<td class="text-center">{{product.orders.length}}</td>
+						<td class="text-center">{{product.created | date:"dd/MM/yyyy"}}</td>
+						<td class="text-center">{{product.closed}}</td>
+						<td class="text-center">
+							<button class="btn btn-danger btn-sm" ng-click="reset($index)">
+								<i class="glyphicon glyphicon-repeat"></i>
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

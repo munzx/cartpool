@@ -1,0 +1,23 @@
+<div class="row">
+	<div class="col-md-12">
+		<input type="text" ng-model="searchUser" class="form-control" placeholder="Search Users">
+		<table class="table">
+			<thead>
+				<tr>
+					<th class="text-center" style="color: #D9D9D9;">Full Name</th>
+					<th class="text-center" style="color: #D9D9D9;">MobilePhone</th>
+					<th class="text-center" style="color: #D9D9D9;">Email</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="no-animate" ng-repeat="user in users | filter:searchUser">
+					<td class="text-center" style="color: #D9D9D9;">
+						<a ui-sref="admin.userDetail({id: user._id})">{{user.firstName}} {{user.lastName}}</a>
+					</td>
+					<td class="text-center" style="color: #D9D9D9;">{{user.mobilePhone || '------'}}</td>
+					<td class="text-center" style="color: #D9D9D9;">{{user.email}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>	
+</div>
