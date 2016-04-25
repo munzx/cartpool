@@ -7,7 +7,7 @@ async = require('async'),
 users = require('../models/user'),
 errorHandler = require('./error'),
 _ = require('lodash'),
-schedule = require('node-schedule'),
+schedule = require('../helpers/simple-schedule'),
 moment = require('moment'),
 json2csv = require('json2csv'),
 validator = require('validator');
@@ -25,6 +25,7 @@ module.exports.index = function(req, res, next) {
 
 module.exports.create = function(req, res, next) {
 	var newProduct,
+	getProduct = products;
 	productInfo = req.body.productInfo,
 	base64Data, dest, imageData, imageName, image;
 
@@ -69,12 +70,12 @@ module.exports.create = function(req, res, next) {
 			});
 		},
 		function sceduleEvent(result, cb){
-			schedule.scheduleJob(productInfo.openUntil , function() {
-				productInfo.closed = true;
-				productInfo.save(function(err, result) {
+			schedule.add(productInfo.openUntil, 'product', productInfo._id, function() {
+				getProduct.findOneAndUpdate({_id: productInfo._id}, {closed: true}, {new: true}, function(err, result) {
 					if(err){
 						console.log(err);
 					} else {
+						console.log(result);
 						req.feeds.emit('product.update', result);
 					}
 				});
@@ -95,6 +96,7 @@ module.exports.create = function(req, res, next) {
 }
 
 module.exports.reset = function(req, res, next) {
+	var getProduct = products;
 	if(req.params.id){
 		products.findById(req.params.id, function(err, productInfo) {
 			if(err){
@@ -107,7 +109,7 @@ module.exports.reset = function(req, res, next) {
 				productInfo.timerStarted = false;
 				productInfo.startTime = null;
 				productInfo.closed = false;
-				productInfo.openUntil = moment().add('minutes', 4).format();
+				productInfo.openUntil = moment().add('seconds', 15).format();
 				productInfo.percentageToLowestPrice = '100';
 
 				productInfo.save(function(err, result) {
@@ -116,6 +118,16 @@ module.exports.reset = function(req, res, next) {
 					} else {
 						res.status(200).jsonp(result);
 						req.feeds.emit('product.update', result);
+						schedule.add(productInfo.openUntil, 'product', productInfo._id, function() {
+							getProduct.findOneAndUpdate({_id: productInfo._id}, {closed: true}, {new: true}, function(err, result) {
+								if(err){
+									console.log(err);
+								} else {
+									console.log(result);
+									req.feeds.emit('product.update', result);
+								}
+							});
+						});
 					}
 				});
 			}
@@ -180,6 +192,7 @@ module.exports.productOrders = function(req, res, next) {
 }
 
 module.exports.placeOrder = function(req, res, next) {
+	var getProduct = products;
 	async.waterfall([
 		function checInfo(cb) {
 			if(!req.params.id || (req.body.orderInfo == undefined) ){
@@ -251,12 +264,12 @@ module.exports.placeOrder = function(req, res, next) {
 		function scheduleEvent(productInfo, savedProductResult, cb) {
 			//close the order after a the specified period if the current price hits the lowest allowed price
 			if(savedProductResult.timerStarted){
-				schedule.scheduleJob(moment().add(productInfo.minutesToClose, 'minutes').format() , function() {
-					productInfo.closed = true;
-					productInfo.save(function(err, result) {
+				schedule.add(moment().add(productInfo.minutesToClose, 'minutes').format(), 'product', productInfo._id, function() {
+					getProduct.findOneAndUpdate({_id: productInfo._id}, {closed: true}, {new: true}, function(err, result) {
 						if(err){
 							console.log(err);
 						} else {
+							console.log(result);
 							req.feeds.emit('product.update', result);
 						}
 					});
