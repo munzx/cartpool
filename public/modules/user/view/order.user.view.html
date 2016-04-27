@@ -3,10 +3,14 @@
 		<h4 class="alert alert-danger">No orders found!</h4>
 	</div>
 	<div class="col-md-12" ng-if="orders.length">
-		<h5>{{orders[0].customer}}</h5>
-		<h5>{{orders[0].email}}</h5>
-		<h5>{{orders[0].mobilePhone}}</h5>
-		<br />
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-default">
+					<h5 class="alert alert-default text-center">{{orders[0].customer}}</h5>
+				</div>
+			</div>
+		</div>
+		<br/>
 		<div class="table-responsive">
 			<table class="table">
 				<thead>
@@ -15,14 +19,17 @@
 						<th class="text-center">Price</th>
 						<th class="text-ecnter">Qty</th>
 						<th class="text-center">Date</th>
+						<th></th>
 					</tr>
 				</thead>
-				<tbody ng-repeat="order in orders" ng-repeat="order in orders" class="no-animate">
+				<tbody ng-repeat="order in orders" class="no-animate">
 					<tr>
 						<td class="text-center">{{order.name}}</td>
 						<td class="text-center">{{order.currentPrice}}</td>
 						<td class="text-center">{{order.qty}}</td>
 						<td class="text-center">{{order.created | date: 'MMMM dd yyyy, h:mm:ss a'  }}</td>
+						<td><qrcode ng-show="order.inStore" version="5" error-correction-level="M" size="100" download data="{{order.productID + order.userID}}"></qrcode>
+						</td>
 					</tr>
 				</tbody>
 			</table>

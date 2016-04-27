@@ -93,6 +93,9 @@ module.exports.getUserOwnOrders = function(req, res, next) {
 							 _.map(product.orders, function(order) {
 							 	if(order.user._id.toString() == userInfo._id.toString()){
 									ordersInfo.push({
+										userID: userInfo._id,
+										productID: product._id,
+										inStore: product.inStore,
 										name: product.name,
 										initialPrice: product.initialPrice,
 										currentPrice: product.currentPrice,

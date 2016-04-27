@@ -73,6 +73,10 @@ productSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
+	inStore: {
+		type: Boolean,
+		default: false
+	},
 	closed: {
 		type: Boolean,
 		default: false

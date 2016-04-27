@@ -2,7 +2,7 @@
 
 // intitiate the app and Inject all of the app module dependencies
 //configure the routes
-angular.module('cartpool', ['btford.socket-io', 'monospaced.qrcode', 'ngAnimate', 'ui.bootstrap', 'ui.router','ngResource', 'authModule', 'homeModule', 'userModule','chart.js', 'AngularPrint', 'adminModule', 'angular-storage', 'angular-jwt', 'productModule', 'timer'])
+angular.module('cartpool', ['btford.socket-io', 'akoenig.deckgrid', 'monospaced.qrcode', 'ngAnimate', 'ui.bootstrap', 'ui.router','ngResource', 'authModule', 'homeModule', 'userModule','chart.js', 'AngularPrint', 'adminModule', 'angular-storage', 'angular-jwt', 'productModule', 'timer'])
 //RouteScopes & Routes Configurations 
 .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', 'ChartJsProvider', function ($urlRouterProvider, $stateProvider, $locationProvider, ChartJsProvider) {
     // Configure all charts
