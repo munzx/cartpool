@@ -97,6 +97,8 @@ router
 //admin
 .get('/admin/first', admins.createFirst)
 .get('/admin', ensureAuthenticated, isAdmin, admins.index)
+.get('/admin/report', admins.fullReport)
+.get('/admin/report/product/:id', admins.singleProductReport)
 //users
 .get('/user', ensureAuthenticated, isAdmin, users.index)
 .post('/user/admin/create', isAdmin, users.create)
@@ -104,6 +106,7 @@ router
 .put('/user', ensureAuthenticated, isUser, users.update)
 .get('/user/email/:email', ensureAuthenticated, users.getUserByEmail)
 .get('/user/id/:id', ensureAuthenticated, users.getUserById)
+.get('/user/orders', ensureAuthenticated, isUser, users.getUserOwnOrders)
 //products
 .get('/product', products.index)
 .post('/product', ensureAuthenticated, isAdmin, products.create)

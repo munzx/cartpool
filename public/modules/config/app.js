@@ -53,6 +53,16 @@ angular.module('cartpool', ['btford.socket-io', 'monospaced.qrcode', 'ngAnimate'
 			templateUrl: 'public/modules/admin/view/index.admin.view.html',
 			controller: 'indexAdminController'
 		})
+		.state('admin.report', {
+			url: '/report',
+			cache: false,
+			views: {
+				'page': {
+					templateUrl: 'public/modules/admin/view/report.admin.view.html',
+					controller: 'reportAdminController'
+				}
+			}
+		})
 		.state('admin.product', {
 			url: '/product',
 			cache: false,
@@ -70,6 +80,16 @@ angular.module('cartpool', ['btford.socket-io', 'monospaced.qrcode', 'ngAnimate'
 				'page': {
 					templateUrl: 'public/modules/admin/view/order.admin.view.html',
 					controller: 'orderAdminController'
+				}
+			}
+		})
+		.state('admin.productDetail', {
+			url: '/product/:id',
+			cache: false,
+			views: {
+				'page': {
+					templateUrl: 'public/modules/admin/view/detail.product.admin.html',
+					controller: 'detailProductAdminController'
 				}
 			}
 		})

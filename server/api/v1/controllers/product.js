@@ -25,7 +25,7 @@ module.exports.index = function(req, res, next) {
 
 module.exports.create = function(req, res, next) {
 	var newProduct,
-	getProduct = products;
+	getProduct = products,
 	productInfo = req.body.productInfo,
 	base64Data, dest, imageData, imageName, image;
 
@@ -143,6 +143,7 @@ module.exports.remove = function(req, res, next) {
 			if(err){
 				res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 			} else {
+				schedule.remove('product', req.params.id);
 				res.status(200).jsonp('product has been removed successfully');
 			}
 		});
@@ -150,7 +151,6 @@ module.exports.remove = function(req, res, next) {
 		res.status(500).jsonp({message: 'Please provide the product ID'});
 	}
 }
-
 
 module.exports.orders = function(req, res, next) {
 	products.find().populate('orders').sort('-created').populate('orders.user').exec(function(err, products) {
@@ -164,6 +164,7 @@ module.exports.orders = function(req, res, next) {
 							name: product.name,
 							initialPrice: product.initialPrice,
 							currentPrice: product.currentPrice,
+							qty: order.quantity,
 							customer: order.user.firstName  + ' ' + order.user.lastName,
 							email: order.user.email,
 							mobilePhone: order.user.mobilePhone,
@@ -176,14 +177,13 @@ module.exports.orders = function(req, res, next) {
 	});
 }
 
-
 module.exports.productOrders = function(req, res, next) {
 	if(req.params.id){
-		products.findById(req.params.id).populate('orders').exec(function(err, productInfo) {
+		products.findById(req.params.id).populate('orders.user').exec(function(err, productInfo) {
 			if(err){
 				res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 			} else {
-				res.status(200).jsonp(productInfo.orders);
+				res.status(200).jsonp(productInfo);
 			}
 		});
 	} else {
@@ -305,6 +305,7 @@ module.exports.csv = function(req, res, next) {
 									name: product.name,
 									initialPrice: product.initialPrice,
 									currentPrice: product.currentPrice,
+									qty: order.quantity,
 									customer: order.user.firstName  + ' ' + order.user.lastName,
 									email: order.user.email,
 									mobilePhone: order.user.mobilePhone,
@@ -329,6 +330,13 @@ module.exports.csv = function(req, res, next) {
 						label: 'Price',
 						value: function(row) {
 							return row.currentPrice;
+						},
+						default: 'NULL'
+					},
+					{
+						label: 'QTY',
+						value: function(row) {
+							return row.qty;
 						},
 						default: 'NULL'
 					},

@@ -17,12 +17,15 @@
 						<th class="text-center">Orders</th>
 						<th class="text-center">Date</th>
 						<th class="text-center">Closed</th>
-						<th class="text-center">Reset</th>
+						<th class="text-center"><i class="glyphicon glyphicon-repeat"></i></th>
+						<th class="text-center"><i class="glyphicon glyphicon-trash"></i></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="product in products" class="no-animate">
-						<td class="text-center">{{product.name}}</td>
+						<td class="text-center">
+							<a ui-sref="admin.productDetail({id: product._id})">{{product.name}}</a>
+						</td>
 						<td class="text-center">{{product.currentPrice}}</td>
 						<td class="text-center">{{product.initialPrice}}</td>
 						<td class="text-center">{{product.lowestPrice}}</td>
@@ -32,6 +35,11 @@
 						<td class="text-center">
 							<button class="btn btn-danger btn-sm" ng-click="reset($index)">
 								<i class="glyphicon glyphicon-repeat"></i>
+							</button>
+						</td>
+						<td class="text-center">
+							<button class="btn btn-danger btn-sm" ng-click="remove($index)">
+								<i class="glyphicon glyphicon-trash"></i>
 							</button>
 						</td>
 					</tr>

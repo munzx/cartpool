@@ -1,0 +1,66 @@
+<div class="row">
+	<div class="col-md-12" ng-if="!product.orders.length">
+		<h4 class="alert alert-danger">No orders not found!</h4>
+	</div>
+	<div class="col-md-12" ng-if="product.orders.length">
+		<div class="row add-space">
+			<div class="col-md-12">
+				<div class="panel panel-default ">
+					<h4 class="alert alert-default text-center">{{product.name}} <br> {{product.created | date: 'MMMM dd yyyy, h:mm a'}} <br> Status: {{product.closed}}</h4>
+				</div>
+			</div>
+		</div>
+		<div class="row add-space">
+			<div class="col-md-6">
+				<div class="panel panel-default ">
+					<h4 class="alert alert-default text-center">Total Orders <br/> {{totalOrders}}</h4>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="panel panel-default ">
+					<h4 class="alert alert-default text-center">Total Orders Quantity <br/> {{totalOrdersQty}}</h4>
+				</div>
+			</div>
+		</div>
+		<div class="row add-space">
+			<div class="col-md-6">
+				<h4 class="text-center">Customers Gender</h4>
+				<canvas id="doughnutGender" class="chart chart-doughnut"
+					data="doughnutGender.data" legend="true" labels="doughnutGender.labels">
+				</canvas>
+			</div>
+			<div class="col-md-6">
+				<h4 class="text-center">Customers Age Group</h4>
+				<canvas id="doughnutAge" class="chart chart-doughnut"
+					data="doughnutAge.data" legend="true" labels="doughnutAge.labels">
+				</canvas> 
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<canvas id="line" class="chart chart-line" data="line.data" labels="line.labels" 
+	  				legend="true" series="line.series">
+	  			</canvas> 
+			</div>
+		</div>
+		<br />
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
+					<tr>
+						<th class="text-center">Customer</th>
+						<th class="text-center">Qty</th>
+						<th class="text-center">Date</th>
+				</tr>
+				</thead>
+				<tbody ng-repeat="order in product.orders" class="no-animate">
+					<tr>
+						<td class="text-center">{{order.user.firstName}}</td>
+						<td class="text-center">{{order.quantity}}</td>
+						<td class="text-center">{{order.created | date: 'MMMM dd yyyy, h:mm:ss a'  }}</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

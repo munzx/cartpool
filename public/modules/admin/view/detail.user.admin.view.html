@@ -1,29 +1,31 @@
 <div class="row">
-	<div class="col-md-12">
-		<h4 class="alert alert-danger" ng-if="!info.user.firstName">User not found!</h4>
+	<div class="col-md-12" ng-if="!orders.length">
+		<h4 class="alert alert-danger">No orders found!</h4>
 	</div>
-	<div class="col-md-12" ng-if="info.user.firstName">
-		<h4 style="color: #D9D9D9;">{{info.user.firstName}} {{info.user.lastName}}</h4>
-		<hr class="hr"/>
-		<h5 style="color: #D9D9D9;">Email: {{info.user.email || '----' }}</h5>
-		<h5 style="color: #D9D9D9;">Mobile Phone: {{info.user.mobilePhone || '----' }}</h5>
-	</div>
-	<div class="col-md-12" ng-if="info.event.length">
-		<table class="table">
-			<thead>
-				<tr>
-					<th style="color: #D9D9D9;">Event</th>
-					<th style="color: #D9D9D9;">Description</th>
-					<th style="color: #D9D9D9;">Date</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="event in info.event">
-					<td style="color: #D9D9D9;"><a ui-sref="admin.eventDetail({id: event._id})">{{event.name}}</a></td>
-					<td style="color: #D9D9D9;">{{event.desc}}</td>
-					<td style="color: #D9D9D9;">{{event.date | date: 'dd/MM/yyyy'}}</td>
-				</tr>
-			</tbody>
-		</table>
+	<div class="col-md-12" ng-if="orders.length">
+		<div class="panel panel-default ">
+			<h5 class="alert alert-default text-center">{{orders[0].customer}} <br> {{orders[0].email}} <br> {{orders[0].mobilePhone}}</h5>
+		</div>
+		<br />
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
+					<tr>
+						<th class="text-center">Product</th>
+						<th class="text-center">Price</th>
+						<th class="text-ecnter">Qty</th>
+						<th class="text-center">Date</th>
+					</tr>
+				</thead>
+				<tbody ng-repeat="order in orders" ng-repeat="order in orders" class="no-animate">
+					<tr>
+						<td class="text-center">{{order.name}}</td>
+						<td class="text-center">{{order.currentPrice}}</td>
+						<td class="text-center">{{order.qty}}</td>
+						<td class="text-center">{{order.created | date: 'MMMM dd yyyy, h:mm:ss a'  }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>

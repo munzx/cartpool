@@ -8,7 +8,8 @@ lookup = require('country-data').lookup,
 fs = require('fs'),
 async = require("async"),
 _ = require('lodash'),
-users = require('../models/user');
+users = require('../models/user'),
+products = require('../models/product');
 
 // get all users
 module.exports.index = function (req, res, next){
@@ -33,12 +34,86 @@ module.exports.getUserById = function(req, res, next) {
 					cb(null, userInfo);
 				}
 			});
+		},
+		function getPorducts(userInfo, cb) {
+			products.find({'orders.user': userInfo._id}).populate('orders.user').exec(function(err, result) {
+				if(err){
+					cb(err);
+				} else {
+					var ordersInfo = [];
+						_.map(result, function(product) {
+							 _.map(product.orders, function(order) {
+							 	if(order.user._id.toString() == userInfo._id.toString()){
+									ordersInfo.push({
+										name: product.name,
+										initialPrice: product.initialPrice,
+										currentPrice: product.currentPrice,
+										qty: order.quantity,
+										customer: order.user.firstName  + ' ' + order.user.lastName,
+										email: order.user.email,
+										mobilePhone: order.user.mobilePhone,
+										created: product.created
+									});							 		
+							 	}
+						});
+					});
+					cb(null, ordersInfo);
+				}
+			});
 		}
-	], function(err, info) {
+	], function(err, userOrders) {
 		if(err){
 			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
 		} else {
-			res.status(200).jsonp(info);
+			res.status(200).jsonp(userOrders);
+		}
+	});
+}
+
+module.exports.getUserOwnOrders = function(req, res, next) {
+	async.waterfall([
+		function getUser(cb) {
+			users.findById(req.user._id).exec(function(err, userInfo) {
+				if(err){
+					cb(err);
+				} else if(!userInfo) {
+					cb('User not found');
+				} else {
+					cb(null, userInfo);
+				}
+			});
+		},
+		function getPorducts(userInfo, cb) {
+			products.find({'orders.user': userInfo._id}).populate('orders.user').exec(function(err, result) {
+				if(err){
+					cb(err);
+				} else {
+					var ordersInfo = [];
+						_.map(result, function(product) {
+							 _.map(product.orders, function(order) {
+							 	if(order.user._id.toString() == userInfo._id.toString()){
+									ordersInfo.push({
+										name: product.name,
+										initialPrice: product.initialPrice,
+										currentPrice: product.currentPrice,
+										qty: order.quantity,
+										customer: order.user.firstName  + ' ' + order.user.lastName,
+										email: order.user.email,
+										mobilePhone: order.user.mobilePhone,
+										created: product.created
+									});							 		
+							 	}
+						});
+					});
+					cb(null, ordersInfo);
+				}
+			});
+		}
+	], function(err, userOrders) {
+		if(err){
+			res.status(500).jsonp({message: errorHandler.getErrorMessage(err)});
+		} else {
+			res.status(200).jsonp(userOrders);
 		}
 	});
 }

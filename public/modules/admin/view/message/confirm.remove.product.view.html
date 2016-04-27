@@ -1,0 +1,16 @@
+<section>
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" ng-click="closeModal()" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<h4 class="modal-title text-center">Remove Product</h4>
+		</div>
+		<div class="modal-body">
+			<h4 ng-show="error" class="alert alert-danger">{{error}}</h4>
+			<h5>Are you sure you wants to remove '{{product.name}}'?</h5>
+			<button class="btn btn-md btn-danger" ng-click="no()">No</button>
+			<button class="btn btn-md btn-default" ng-click="yes()">Yes</button>
+		</div>
+	</div>
+</section>

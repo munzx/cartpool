@@ -26,10 +26,69 @@ angular.module('adminModule').controller('productAdminController', ['$scope', '$
 
 
 	$scope.reset = function(index) {
-		connectProductFactory.get({action: 'reset', id: $scope.products[index]._id}, function(response) {
-			$scope.products[index] = response;
-		}, function(error) {
-			console.log(error);
+		$modal.open({
+			size: 'sm',
+			backdrop: 'static',
+			resolve: {
+				products: function() {
+					return $scope.products;
+				},
+				index: function() {
+					return index;
+				}
+			},
+			templateUrl: 'public/modules/admin/view/message/confirm.reset.product.view.html',
+			controller: ['$scope', 'products', 'index', '$modalInstance', 'connectProductFactory', function($scope, products, index, $modalInstance, connectProductFactory) {
+				$scope.product = products[index];
+				$scope.closeModal = function() {
+					$modalInstance.dismiss('cancel');
+				}
+				$scope.yes = function() {
+					connectProductFactory.get({action: 'reset', id: $scope.product._id}, function(response) {
+						$modalInstance.dismiss('cancel');
+					}, function(error) {
+						console.log(error);
+						$modalInstance.dismiss('cancel');
+					});
+				}
+				$scope.no = function() {
+					$modalInstance.dismiss('cancel');
+				}
+			}]
+		});
+	}
+
+	$scope.remove = function(index) {
+		$modal.open({
+			size: 'sm',
+			backdrop: 'static',
+			resolve: {
+				products: function() {
+					return $scope.products;
+				},
+				index: function() {
+					return index;
+				}
+			},
+			templateUrl: 'public/modules/admin/view/message/confirm.remove.product.view.html',
+			controller: ['$scope', 'products', 'index', '$modalInstance', 'connectProductFactory', function($scope, products, index, $modalInstance, connectProductFactory) {
+				$scope.product = products[index];
+				$scope.closeModal = function() {
+					$modalInstance.dismiss('cancel');
+				}
+				$scope.yes = function() {
+					connectProductFactory.remove({id: $scope.product._id}, function(response) {
+						products.splice(index, 1);
+						$modalInstance.dismiss('cancel');
+					}, function(error) {
+						$modalInstance.dismiss('cancel');
+						console.log(error);
+					});	
+				}
+				$scope.no = function() {
+					$modalInstance.dismiss('cancel');
+				}
+			}]
 		});
 	}
 

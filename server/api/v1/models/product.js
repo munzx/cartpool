@@ -11,6 +11,10 @@ orderSchema = new Schema({
 		type: Number,
 		default: 0,
 		required: 'Please provide the order quantity'
+	},
+	created: {
+		type: Date,
+		default: Date.now
 	}
 });
 

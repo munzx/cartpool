@@ -21,7 +21,6 @@ angular.module('adminModule').controller('userAdminController', ['$scope', 'conn
 					$scope.events = response;
 				});
 
-
 				$scope.closeModal = function() {
 					$modalInstance.dismiss('cancel');
 				}

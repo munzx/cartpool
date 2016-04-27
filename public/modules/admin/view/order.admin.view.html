@@ -12,6 +12,7 @@
 					<tr>
 						<th class="text-center">Product</th>
 						<th class="text-center">Price</th>
+						<th class="text-ecnter">Qty</th>
 						<th class="text-center">Customer</th>
 						<th class="text-center">Email</th>
 						<th class="text-center">Mobile Phone</th>
@@ -22,10 +23,11 @@
 					<tr>
 						<td class="text-center">{{order.name}}</td>
 						<td class="text-center">{{order.currentPrice}}</td>
+						<td class="text-center">{{order.qty}}</td>
 						<td class="text-center">{{order.customer}}</td>
 						<td class="text-center">{{order.email}}</td>
 						<td class="text-center">{{order.mobilePhone || "------------"}}</td>
-						<td class="text-center">{{order.created}}</td>
+						<td class="text-center">{{order.created | date: 'MMMM dd yyyy, h:mm:ss a'  }}</td>
 					</tr>
 				</tbody>
 			</table>
