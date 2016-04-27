@@ -104,8 +104,22 @@ angular.module('adminModule').controller('productAdminController', ['$scope', '$
 			},
 			templateUrl: 'public/modules/admin/view/save.product.admin.view.html',
 			controller: ['$scope', '$modalInstance', 'products', 'connectProductFactory', function($scope, $modalInstance, products, connectProductFactory) {
+				$scope.productInfo = {};
+
 				$scope.closeModal = function() {
 					$modalInstance.dismiss('cancel');
+				}
+
+				$scope.checkMin = function() {
+					if($scope.productInfo.initialPrice){
+						return $scope.productInfo.initialPrice;
+					}
+				}
+
+				$scope.checkMax = function() {
+					if($scope.productInfo.lowestPrice){
+						return $scope.productInfo.lowestPrice;
+					}
 				}
 
 				$scope.save = function() {

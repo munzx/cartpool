@@ -3,7 +3,7 @@
 		<div class="caption">
 			<p ng-if="product.availiable == 0" class="text-center">Product not availiable</p>
 			<timer ng-if="openLessThan5() || openMoreThan5()" end-time="product.openUntil">
-				<p>Time left to place your order is <b>{{days}} days, {{hours}}:{{minutes}}:{{seconds}}</b></p>
+				<p class="text-center">Time left to place your order<br><b>{{days}} days, {{hours}}:{{minutes}}:{{seconds}}</b></p>
 			</timer>
 			<timer ng-if="openRechedLowesePrice()" end-time="closeOrder">
 				<p>Orders will close in  <b>{{minutes}}:{{seconds}}</b></p>

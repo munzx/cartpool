@@ -9,7 +9,7 @@ angular.module('authModule').controller('signinAuthController', ['registerUserCo
 				$location.path($rootScope.lastPage);
 			} else {
 				if(data.user.role == 'admin'){
-					$location.path('/admin/product');
+					$location.path('/admin/report');
 				} else {
 					$location.path('/');
 				}

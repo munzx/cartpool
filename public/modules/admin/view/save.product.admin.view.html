@@ -14,40 +14,70 @@
 						<span class="input-group-addon">
 							<i class="text-muted glyphicon glyphicon-asterisk"></i>
 						</span>
-						<input type="text" class="form-control" name="name" data-ng-model="productInfo.name" placeholder="Name" required>
+						<input type="text" class="form-control" ng-maxlength="40" name="name" data-ng-model="productInfo.name" placeholder="Name" required>
 					</div>
+                    <h5 class="alert alert-danger" ng-show="product.name.$error.required && product.name.$dirty">
+                        Name field is required
+                    </h5>
+                    <h5 class="alert alert-danger" ng-show="product.name.$error.maxlength && product.name.$dirty">
+                       Maxlength is 40 charecters
+                    </h5>
 				</div>
 				<div class="form-group">
 					<div class="input-group input-group-md">
 						<span class="input-group-addon">
 							<i class="text-muted glyphicon glyphicon-list"></i>
 						</span>
-						<textarea class="form-control" name="desc" data-ng-model="productInfo.desc" placeholder="Description" required></textarea>
+						<textarea ng-maxlength="400" class="form-control" name="desc" data-ng-model="productInfo.desc" placeholder="Description" required></textarea>
 					</div>
+                    <h5 class="alert alert-danger" ng-show="product.desc.$error.required && product.desc.$dirty">
+                        Description field is required
+                    </h5>
+                    <h5 class="alert alert-danger" ng-show="product.desc.$error.maxlength && product.desc.$dirty">
+                       Maxlength is 400 charecters
+                    </h5>
 				</div>
 				<div class="form-group">
 					<div class="input-group input-group-md">
 						<span class="input-group-addon">
 							<i class="text-muted glyphicon glyphicon-flag"></i>
 						</span>
-						<input type="number" class="form-control" name="initialPrice" data-ng-model="productInfo.initialPrice" placeholder="Initial Price" required>
+						<input type="number" class="form-control" name="initialPrice" ng-min="checkMax()" data-ng-model="productInfo.initialPrice" placeholder="Initial Price" required>
 					</div>
+                    <h5 class="alert alert-danger" ng-show="product.initialPrice.$error.required && product.initialPrice.$dirty">
+                        Initial price field is required
+                    </h5>
+                    <h5 class="alert alert-danger" ng-show="product.initialPrice.$error.min && product.initialPrice.$dirty">
+                        Minimum value is {{productInfo.lowestPrice}}
+                    </h5>
 				</div>
 				<div class="form-group">
 					<div class="input-group input-group-md">
 						<span class="input-group-addon">
 							<i class="text-muted glyphicon glyphicon-arrow-down"></i>
 						</span>
-						<input type="number" class="form-control" name="lowestPrice" data-ng-model="productInfo.lowestPrice" placeholder="lowest Price" required>
+						<input type="number" class="form-control" name="lowestPrice" ng-max="checkMin()" data-ng-model="productInfo.lowestPrice" placeholder="lowest Price" required>
 					</div>
+                    <h5 class="alert alert-danger" ng-show="product.lowestPrice.$error.required && product.lowestPrice.$dirty">
+                        Lowest price field is required
+                    </h5>
+                    <h5 class="alert alert-danger" ng-show="product.lowestPrice.$error.max && product.lowestPrice.$dirty">
+                       Miximum value is {{productInfo.initialPrice}}
+                    </h5>
 				</div>
 				<div class="form-group">
 					<div class="input-group input-group-md">
 						<span class="input-group-addon">
 							<i class="text-muted glyphicon glyphicon-time"></i>
 						</span>
-						<input type="number" class="form-control" name="minutesToClose" data-ng-model="productInfo.minutesToClose" placeholder="Minutes To Close" required>
+						<input type="number" class="form-control" ng-min="1" name="minutesToClose" data-ng-model="productInfo.minutesToClose" placeholder="Minutes To Close" required>
 					</div>
+                    <h5 class="alert alert-danger" ng-show="product.minutesToClose.$error.required && product.minutesToClose.$dirty">
+                       Minutes to close field is required
+                    </h5>
+                    <h5 class="alert alert-danger" ng-show="product.minutesToClose.$error.min && product.minutesToClose.$dirty">
+                       Minimum value is 1
+                    </h5>
 				</div>
 				<div class="form-group">
 					<div class="input-group input-group-md">
@@ -56,6 +86,9 @@
 						</span>
 						<input type="number" class="form-control" name="availiable" data-ng-model="productInfo.availiable" placeholder="Availiable" required>
 					</div>
+                    <h5 class="alert alert-danger" ng-show="product.availiable.$error.required && product.availiable.$dirty">
+                       Availiable products field is required
+                    </h5>
 				</div>
 				<div class="form-group">
 					<div class="input-group input-group-md">
@@ -64,6 +97,9 @@
 						</span>
 						<input type="datetime-local" class="form-control" name="openUntil" data-ng-model="productInfo.openUntil" placeholder="Open Until" required>
 					</div>
+                    <h5 class="alert alert-danger" ng-show="product.openUntil.$error.required && product.openUntil.$dirty">
+                       Open until field is required
+                    </h5>
 				</div>
 				<div class="form-group">
 					<div class="input-group input-group-sm">
