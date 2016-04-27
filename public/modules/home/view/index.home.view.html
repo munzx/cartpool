@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-md-10 col-md-offset-1">
+	<div class="col-md-12">
 		<div class="image-center text-center">
 			<i style="font-size: 30px;color: #FFF600;" class="glyphicon glyphicon-shopping-cart text-center"></i>
 			<i type-config-directive text="Better Togather!" style="font-size: 30px;color:#D9D9D9;" class="text-center">
@@ -10,7 +10,10 @@
 		<h1>&nbsp;</h1>
 			<div class="row">
 				<div class="col-md-12">
-					<div deckgrid class="deckgrid" source="products" cardTemplate="public/modules/product/view/test.html"></div>
+					<div deckgrid class="deckgrid no-animate" source="products">
+						<div show-product-directive="card" class="no-animate"></div>
+					</div>
+					<!-- <div deckgrid class="deckgrid no-animate" source="products" cardTemplate="public/modules/product/view/test.html"></div> -->
 				</div>
 			</div>
 <!-- 		<div class="row">

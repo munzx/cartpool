@@ -12,6 +12,7 @@ angular.module('productModule').directive('showProductDirective', ['$modal', fun
 		},
 		link: function(scope, elem, attrs) {
 			var product = scope.product;
+			scope.product.name = product.name;
 			scope.disableOrders = false;
 
 			function isTtimePassed(time) {
