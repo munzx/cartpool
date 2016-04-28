@@ -75,7 +75,6 @@ module.exports.create = function(req, res, next) {
 					if(err){
 						console.log(err);
 					} else {
-						console.log(result);
 						req.feeds.emit('product.update', result);
 					}
 				});
@@ -109,7 +108,7 @@ module.exports.reset = function(req, res, next) {
 				productInfo.timerStarted = false;
 				productInfo.startTime = null;
 				productInfo.closed = false;
-				productInfo.openUntil = moment().add('seconds', 15).format();
+				productInfo.openUntil = moment().add('minutes', 10).format();
 				productInfo.percentageToLowestPrice = '100';
 
 				productInfo.save(function(err, result) {
@@ -123,7 +122,6 @@ module.exports.reset = function(req, res, next) {
 								if(err){
 									console.log(err);
 								} else {
-									console.log(result);
 									req.feeds.emit('product.update', result);
 								}
 							});
@@ -269,7 +267,6 @@ module.exports.placeOrder = function(req, res, next) {
 						if(err){
 							console.log(err);
 						} else {
-							console.log(result);
 							req.feeds.emit('product.update', result);
 						}
 					});

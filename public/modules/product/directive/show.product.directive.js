@@ -1,7 +1,7 @@
 'use strict';
 
 
-angular.module('productModule').directive('showProductDirective', ['$modal', function($modal) {
+angular.module('productModule').directive('showProductDirective', ['$modal', 'requreLoginConfigFactory', 'registerUserConfigFactory', function($modal, requreLoginConfigFactory, registerUserConfigFactory) {
 	return {
 		templateUrl: 'public/modules/product/view/show.product.directive.view.html',
 		restrict: 'A',
@@ -11,6 +11,8 @@ angular.module('productModule').directive('showProductDirective', ['$modal', fun
 			"product": "=showProductDirective"
 		},
 		link: function(scope, elem, attrs) {
+			var user = registerUserConfigFactory.getUser();
+
 			if(scope.product){
 				var product = scope.product;
 				scope.product.name = product.name;
@@ -71,82 +73,85 @@ angular.module('productModule').directive('showProductDirective', ['$modal', fun
 					}
 
 					scope.order = function() {
-						$modal.open({
-							size: 'sm',
-							backdrop: 'static',
-							resolve: {
-								product: function() {
-									return scope.product;
-								}
-							},
-							templateUrl: 'public/modules/product/view/order.product.directive.view.html',
-							controller: ['$scope', '$modalInstance', '$timeout', 'product', '$modal', function($scope, $modalInstance, $timeout, product, $modal) {
-								$scope.productInfo = product;
+						if(!user){
+							requreLoginConfigFactory.open();
+						} else {
+							$modal.open({
+								size: 'sm',
+								backdrop: 'static',
+								resolve: {
+									product: function() {
+										return scope.product;
+									}
+								},
+								templateUrl: 'public/modules/product/view/order.product.directive.view.html',
+								controller: ['$scope', '$modalInstance', '$timeout', 'product', '$modal', function($scope, $modalInstance, $timeout, product, $modal) {
+									$scope.productInfo = product;
 
-								$scope.closeModal = function() {
-									$modalInstance.dismiss('cancel');
-								}
+									$scope.closeModal = function() {
+										$modalInstance.dismiss('cancel');
+									}
 
-								$scope.placeOrder = function() {
-									$modal.open({
-										size: 'sm',
-										backdrop: 'static',
-										resolve: {
-											productInfo: function() {
-												return $scope.productInfo;
+									$scope.placeOrder = function() {
+										$modal.open({
+											size: 'sm',
+											backdrop: 'static',
+											resolve: {
+												productInfo: function() {
+													return $scope.productInfo;
+												},
+												orderInfo: function() {
+													return $scope.orderInfo;
+												},
+												parentModal: function() {
+													return $modalInstance;
+												}
 											},
-											orderInfo: function() {
-												return $scope.orderInfo;
-											},
-											parentModal: function() {
-												return $modalInstance;
-											}
-										},
-										templateUrl: 'public/modules/product/view/confirm.order.product.directive.view.html',
-										controller: ['$scope', 'orderInfo', '$modalInstance', 'parentModal', 'connectProductFactory', 'productInfo', '$modal', function($scope, orderInfo, $modalInstance, parentModal, connectProductFactory, productInfo, $modal) {
-											$scope.orderInfo = orderInfo;
-											$scope.productInfo = productInfo;
-											$scope.closeModal = function() {
-												$modalInstance.dismiss('cancel');
-											}
-
-											$scope.no = function() {
-												$modalInstance.dismiss('cancel');
-												parentModal.dismiss('cancel');
-											}
-
-											$scope.yes = function() {
-												connectProductFactory.save({action: 'order', id: $scope.productInfo._id}, {orderInfo: $scope.orderInfo}, function(response) {
-													$scope.productInfo = response;
-													parentModal.dismiss('cancel');
+											templateUrl: 'public/modules/product/view/confirm.order.product.directive.view.html',
+											controller: ['$scope', 'orderInfo', '$modalInstance', 'parentModal', 'connectProductFactory', 'productInfo', '$modal', function($scope, orderInfo, $modalInstance, parentModal, connectProductFactory, productInfo, $modal) {
+												$scope.orderInfo = orderInfo;
+												$scope.productInfo = productInfo;
+												$scope.closeModal = function() {
 													$modalInstance.dismiss('cancel');
-													$modal.open({
-														template: "<h4 class='alert alert-success'>Order has been placed successfully</h4>",
-														controller: ['$timeout', '$modalInstance', function($timeout, $modalInstance) {
-															$timeout(function() {
-																$modalInstance.dismiss('class');
-															}, 2000);
-														}]
-													});
-												}, function(error) {
-													parentModal.dismiss('cancel');
-													$modalInstance.dismiss('cancel');
-													$modal.open({
-														template: "<h4 class='alert alert-danger'>Failed to place order</h4>",
-														controller: ['$timeout', '$modalInstance', function($timeout, $modalInstance) {
-															$timeout(function() {
-																$modalInstance.dismiss('class');
-															}, 2000);
-														}]
-													});
-												});
-											}
-										}]
-									});
-								}
+												}
 
-							}]
-						});
+												$scope.no = function() {
+													$modalInstance.dismiss('cancel');
+													parentModal.dismiss('cancel');
+												}
+
+												$scope.yes = function() {
+													connectProductFactory.save({action: 'order', id: $scope.productInfo._id}, {orderInfo: $scope.orderInfo}, function(response) {
+														$scope.productInfo = response;
+														parentModal.dismiss('cancel');
+														$modalInstance.dismiss('cancel');
+														$modal.open({
+															template: "<h4 class='alert alert-success'>Order has been placed successfully</h4>",
+															controller: ['$timeout', '$modalInstance', function($timeout, $modalInstance) {
+																$timeout(function() {
+																	$modalInstance.dismiss('class');
+																}, 2000);
+															}]
+														});
+													}, function(error) {
+														parentModal.dismiss('cancel');
+														$modalInstance.dismiss('cancel');
+														$modal.open({
+															template: "<h4 class='alert alert-danger'>Failed to place order</h4>",
+															controller: ['$timeout', '$modalInstance', function($timeout, $modalInstance) {
+																$timeout(function() {
+																	$modalInstance.dismiss('class');
+																}, 2000);
+															}]
+														});
+													});
+												}
+											}]
+										});
+									}
+								}]
+							});
+						}
 					}
 				});
 			}
