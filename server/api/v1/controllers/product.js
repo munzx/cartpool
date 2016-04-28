@@ -232,7 +232,7 @@ module.exports.placeOrder = function(req, res, next) {
 								break;
 							case (productInfo.totalOrdersQty > 5):
 								deductedAmount = productInfo.initialPrice - ((percentage5 - productInfo.totalOrdersQty) * productInfo.totalOrdersQty);
-								productInfo.currentPrice = ((percentage5 / 2) <=  productInfo.totalOrdersQty) ? productInfo.lowestPrice: deductedAmount;
+								productInfo.currentPrice = ((percentage5 / 2) >  productInfo.totalOrdersQty || (deductedAmount <  productInfo.lowestPrice))? deductedAmount: productInfo.lowestPrice;
 								productInfo.percentageToLowestPrice = Math.floor(((productInfo.initialPrice - productInfo.currentPrice) / (productInfo.initialPrice - productInfo.lowestPrice)) * 100);
 								break;
 						}
