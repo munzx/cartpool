@@ -210,7 +210,7 @@ module.exports.placeOrder = function(req, res, next) {
 			});
 		},
 		function findProductAndPlaceOrder(cb) {
-			var price, orderInfo = req.body.orderInfo, base, percentage5, deductedAmount;
+			var price, orderInfo = req.body.orderInfo, base, percentage5, deductedAmount, lowestDeductableValue;
 			products.findById(req.params.id, function(err, productInfo) {
 				if(err){
 					cb(err);
@@ -220,6 +220,7 @@ module.exports.placeOrder = function(req, res, next) {
 						percentage5 = base / 5;
 						productInfo.totalOrdersQty += orderInfo.quantity;
 						productInfo.availiable -= orderInfo.quantity;
+						lowestDeductableValue = ((percentage5 * productInfo.initialPrice) / 100);
 
 						switch(true){
 							case (productInfo.totalOrdersQty < 5):
@@ -229,13 +230,9 @@ module.exports.placeOrder = function(req, res, next) {
 								productInfo.currentPrice = productInfo.initialPrice - base;
 								productInfo.percentageToLowestPrice = Math.floor(((productInfo.initialPrice - productInfo.currentPrice) / (productInfo.initialPrice - productInfo.lowestPrice)) * 100);
 								break;
-							case (productInfo.totalOrdersQty > 5 && productInfo.totalOrdersQty > (percentage5 / 2)):
-								productInfo.currentPrice = productInfo.lowestPrice;
-								productInfo.percentageToLowestPrice = Math.floor(((productInfo.initialPrice - productInfo.currentPrice) / (productInfo.initialPrice - productInfo.lowestPrice)) * 100);
-								break;
-							case (productInfo.totalOrdersQty > 5 && productInfo.totalOrdersQty < (percentage5 / 2)):
+							case (productInfo.totalOrdersQty > 5):
 								deductedAmount = productInfo.initialPrice - ((percentage5 - productInfo.totalOrdersQty) * productInfo.totalOrdersQty);
-								productInfo.currentPrice = ((productInfo.currentPrice != productInfo.lowestPrice) && (deductedAmount > productInfo.lowestPrice))? deductedAmount: productInfo.lowestPrice;
+								productInfo.currentPrice = ((productInfo.currentPrice != productInfo.lowestPrice) && (deductedAmount > productInfo.lowestPrice) && ((productInfo.totalOrdersQty / 2) <= percentage5))? deductedAmount: productInfo.lowestPrice;
 								productInfo.percentageToLowestPrice = Math.floor(((productInfo.initialPrice - productInfo.currentPrice) / (productInfo.initialPrice - productInfo.lowestPrice)) * 100);
 								break;
 						}
